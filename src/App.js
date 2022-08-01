@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import IndexPage from './IndexPage';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {styled} from '@mui/material/styles';
+
+const Main = styled('main')(({theme}) => ({
+    backgroundColor: 'rgba(255,255,255,0.15)'
+}))
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+
+            <Switch>
+                <Route path="*" component={IndexPage}/>
+            </Switch>
+
+
+        </BrowserRouter>
+    );
 }
 
 export default App;
