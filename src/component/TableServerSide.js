@@ -1,5 +1,5 @@
-import { Button, CircularProgress } from '@mui/material';
-import React from 'react';
+import {Button, CircularProgress} from '@mui/material';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import MUIDataTable from "mui-datatables";
 
@@ -36,23 +36,22 @@ const theData = [
     ['Mason Ray', 'Computer Scientist', 'San Francisco', 39, '$142,000'],
 ];
 
-class TableServerSide extends React.Component {
-    state = {
-        isLoading: false,
-        data: theData
-    };
+const TableServerSide = () => {
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [data, setData] = useState(theData);
 
     // mock async function
-    xhrRequest = (url, filterList) => {
+    const xhrRequest = (url, filterList) => {
         return new Promise(resolve => {
             window.setTimeout(
                 () => {
                     const data = theData;
 
                     if (
-                        filterList.reduce( (accu, cur) => accu + cur.length, 0) === 0
+                        filterList.reduce((accu, cur) => accu + cur.length, 0) === 0
                     ) {
-                        resolve({ data });
+                        resolve({data});
                     } else {
 
                         /*
@@ -71,7 +70,7 @@ class TableServerSide extends React.Component {
                             return ret;
                         });
 
-                        resolve({ data: filteredData });
+                        resolve({data: filteredData});
                     }
                 },
                 2000
@@ -79,105 +78,105 @@ class TableServerSide extends React.Component {
         });
     }
 
-    handleFilterSubmit = applyFilters => {
+    const handleFilterSubmit = applyFilters => {
         let filterList = applyFilters();
-
-        this.setState({ isLoading: true });
-
+        setIsLoading(true)
         // fake async request
-        this.xhrRequest(`/myApiServer?filters=${filterList}`, filterList).then(res => {
-            this.setState({ isLoading: false, data: res.data });
+        xhrRequest(`/myApiServer?filters=${filterList}`, filterList).then(res => {
+            setIsLoading(false)
+            setData(res.data)
         });
     };
 
-    render() {
-        const columns = [
-            {
-                name: 'Name',
-                options: {
-                    filter: true,
-                },
-            },
-            {
-                label: 'Title',
-                name: 'Title',
-                options: {
-                    filter: true,
-                },
-            },
-            {
-                name: 'Location',
-                options: {
-                    filter: true,
-                },
-            },
-            {
-                name: 'Age',
-                options: {
-                    filter: true,
-                },
-            },
-            {
-                name: 'Salary',
-                options: {
-                    filter: true,
-                },
-            },
-        ];
 
-        const options = {
-            filter: true, // show the filter icon in the toolbar (true by default)
-            filterType: 'dropdown',
-            responsive: 'standard',
-            serverSide: true,
-            rowsPerPage: 50,
-            rowsPerPageOptions: [50],
-
-            // makes it so filters have to be "confirmed" before being applied to the
-            // table's internal filterList
-            confirmFilters: true,
-
-            // Calling the applyNewFilters parameter applies the selected filters to the table
-            customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
-                return (
-                    <div style={{ marginTop: '40px' }}>
-                        <Button variant="contained" onClick={() => this.handleFilterSubmit(applyNewFilters)}>Apply Filters</Button>
-                    </div>
-                );
+    const columns = [
+        {
+            name: 'Name',
+            options: {
+                filter: true,
             },
+        },
+        {
+            label: 'Title',
+            name: 'Title',
+            options: {
+                filter: true,
+            },
+        },
+        {
+            name: 'Location',
+            options: {
+                filter: true,
+            },
+        },
+        {
+            name: 'Age',
+            options: {
+                filter: true,
+            },
+        },
+        {
+            name: 'Salary',
+            options: {
+                filter: true,
+            },
+        },
+    ];
 
-            // callback that gets executed when filters are confirmed
-            onFilterConfirm: (filterList) => {
-                console.log('onFilterConfirm');
-                console.dir(filterList);
-            },
+    const options = {
+        filter: true, // show the filter icon in the toolbar (true by default)
+        filterType: 'dropdown',
+        responsive: 'standard',
+        serverSide: true,
+        rowsPerPage: 50,
+        rowsPerPageOptions: [50],
 
-            onFilterDialogOpen: () => {
-                console.log('filter dialog opened');
-            },
-            onFilterDialogClose: () => {
-                console.log('filter dialog closed');
-            },
-            onFilterChange: (column, filterList, type) => {
-                if (type === 'chip') {
-                    var newFilters = () => (filterList);
-                    console.log('updating filters via chip');
-                    this.handleFilterSubmit(newFilters);
-                }
-            },
-        };
+        // makes it so filters have to be "confirmed" before being applied to the
+        // table's internal filterList
+        // confirmFilters: true,
 
-        return (
-            <React.Fragment>
-                {this.state.isLoading && (
-                    <div style={{ position: 'absolute', top: '50%', left: '50%' }}>
-                        <CircularProgress />
-                    </div>
-                )}
-                <MUIDataTable title={'Query from server'} data={this.state.data} columns={columns} options={options} />
-            </React.Fragment>
-        );
-    }
+        // Calling the applyNewFilters parameter applies the selected filters to the table
+        customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
+            return (
+                <div style={{marginTop: '40px'}}>
+                    <Button variant="contained" onClick={() => handleFilterSubmit(applyNewFilters)}>Apply
+                        Filters</Button>
+                </div>
+            );
+        },
+
+        // callback that gets executed when filters are confirmed
+        onFilterConfirm: (filterList) => {
+            console.log('onFilterConfirm');
+            console.dir(filterList);
+        },
+
+        onFilterDialogOpen: () => {
+            console.log('filter dialog opened');
+        },
+        onFilterDialogClose: () => {
+            console.log('filter dialog closed');
+        },
+        onFilterChange: (column, filterList, type) => {
+            if (type === 'chip') {
+                var newFilters = () => (filterList);
+                console.log('updating filters via chip');
+                handleFilterSubmit(newFilters);
+            }
+        },
+    };
+
+    return (
+        <React.Fragment>
+            {isLoading && (
+                <div style={{position: 'absolute', top: '50%', left: '50%'}}>
+                    <CircularProgress/>
+                </div>
+            )}
+            <MUIDataTable title={'Query from server'} data={data} columns={columns} options={options}/>
+        </React.Fragment>
+    );
+
 }
 
 export default TableServerSide;

@@ -190,7 +190,7 @@ const TableSearchRender = () => {
                     },
                     display: (filterList, onChange, index, column) => (
                         <div>
-                            <FormLabel>Age1</FormLabel>
+                            <FormLabel xs={12}>Age1</FormLabel>
                             <FormGroup row>
                                 <TextField
                                     label='min'
@@ -246,16 +246,17 @@ const TableSearchRender = () => {
                 sort: false,
             },
         },
+
     ];
 
     const options = {
         filter: true,
         filterType: 'multiselect',
-        responsive: 'standard',
+        responsive:  'standard',
         setFilterChipProps: (colIndex, colName, data) => {
             //console.log(colIndex, colName, data);
             return {
-                color: 'primary',
+                color: 'secondary',
                 variant: 'outlined',
                 className: 'testClass123',
             };

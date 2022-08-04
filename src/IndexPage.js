@@ -2,6 +2,7 @@ import {Box, Stack, Typography} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import TableCustomFilter from "./component/TableCustomFilter";
 import TableServerSide from "./component/TableServerSide";
+import Count from "./component/Count";
 
 
 const APP_HEADER_HEIGHT = 80;
@@ -40,6 +41,9 @@ function IndexPage() {
                 <Typography variant='outlined'>456</Typography>
                 <Typography>789</Typography>
             </Box>
+            {/*<Box>*/}
+            {/*    <Count></Count>*/}
+            {/*</Box>*/}
             <Box sx={{p: 2, border: '1px dashed grey'}}>
                <TableCustomFilter />
             </Box>
