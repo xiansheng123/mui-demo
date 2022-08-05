@@ -1,13 +1,19 @@
-import React from 'react'
-import {Alert, AlertTitle} from "@mui/material";
+import React, {useState} from 'react'
+import {Alert, AlertTitle, Collapse} from "@mui/material";
 
 function CustomAlert(props) {
 
+    const [open, setOpen] = useState(true)
+
     return (
-        <Alert severity='info'>
-            <AlertTitle>Success</AlertTitle>
-            {props.children}
-        </Alert>
+        <Collapse in={open}>
+            <Alert severity='info' onClose={() => {
+                setOpen(false)
+            }}>
+                <AlertTitle>Success</AlertTitle>
+                {props.children}
+            </Alert>
+        </Collapse>
     )
 }
 
