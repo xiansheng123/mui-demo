@@ -1,5 +1,5 @@
 import {
-    Checkbox,
+    Checkbox, Chip,
     FormControl,
     FormControlLabel,
     FormGroup,
@@ -11,7 +11,7 @@ import {
     TextField
 } from '@mui/material';
 import React, {useEffect, useState} from 'react';
-import MUIDataTable from "mui-datatables";
+import MUIDataTable, { TableFilterList }  from "mui-datatables";
 
 const data = [
     ['Gabby George', 'Business Analyst', 'Minneapolis', 30, '$100,000'],
@@ -249,6 +249,21 @@ const TableSearchRender = () => {
 
     ];
 
+    /*here is for custom Chip Start*/
+    const CustomChip = ({ label, onDelete }) => {
+        return (
+            <Chip
+                variant="outlined"
+                color="secondary"
+                label={label}
+            />
+        );
+    };
+    const CustomFilterList = (props) => {
+        return <TableFilterList {...props} ItemComponent={CustomChip} />;
+    };
+    /*here is for custom Chip End*/
+
     const options = {
         filter: true,
         filterType: 'multiselect',
@@ -264,7 +279,9 @@ const TableSearchRender = () => {
     };
 
     return (
-        <MUIDataTable title={'ACME Employee list - customizeFilter'} data={dataRenderHook} columns={columns} options={options}/>
+        <MUIDataTable title={'ACME Employee list - customizeFilter'} data={dataRenderHook} columns={columns} options={options}
+                      components={{TableFilterList: CustomFilterList}}
+        />
     );
 
 }
