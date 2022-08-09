@@ -94,6 +94,7 @@ const TableServerSide = () => {
             name: 'Name',
             options: {
                 filter: true,
+                // filterList: ['Franky Miles'], init
             },
         },
         {
@@ -128,12 +129,12 @@ const TableServerSide = () => {
         filterType: 'dropdown',
         responsive: 'standard',
         serverSide: true,
-        rowsPerPage: 50,
-        rowsPerPageOptions: [50],
+        rowsPerPage: 5,
+        rowsPerPageOptions: [5],
 
         // makes it so filters have to be "confirmed" before being applied to the
         // table's internal filterList
-        // confirmFilters: true,
+       confirmFilters: true,
 
         // Calling the applyNewFilters parameter applies the selected filters to the table
         customFilterDialogFooter: (currentFilterList, applyNewFilters) => {
@@ -160,7 +161,7 @@ const TableServerSide = () => {
         onFilterChange: (column, filterList, type) => {
             if (type === 'chip') {
                 var newFilters = () => (filterList);
-                console.log('updating filters via chip');
+                console.log('updating filters via chip',filterList);
                 handleFilterSubmit(newFilters);
             }
         },
