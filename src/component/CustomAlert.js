@@ -1,9 +1,17 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Alert, AlertTitle, Collapse} from "@mui/material";
 
 function CustomAlert(props) {
+    const {show} = props
 
-    const [open, setOpen] = useState(true)
+    const [open, setOpen] = useState()
+
+    console.log(`CustomAlert outside ${show}`);
+    console.log(`CustomAlert inside ${open}`);
+
+    useEffect(() => {
+        setOpen(show);
+    }, [show])
 
     return (
         <Collapse in={open}>

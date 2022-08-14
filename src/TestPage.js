@@ -1,4 +1,4 @@
-import {Box, Grid, Stack, Typography} from "@mui/material";
+import {Box, Button, Grid, Stack, Typography} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import TableCustomFilter from "./component/TableCustomFilter";
 import TableServerSide from "./component/TableServerSide";
@@ -7,6 +7,7 @@ import CustomAlert from "./component/CustomAlert";
 import SatisfactionChartCard from "./component/chart/SatisfactionChartCard";
 import chartData from "./component/chart/chartData";
 import ConversionsChartCard from "./component/chart/ConversionsChartCard";
+import {useState} from "react";
 
 
 const APP_HEADER_HEIGHT = 80;
@@ -41,15 +42,22 @@ const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(({th
 }))
 
 
-function IndexPage() {
+function TestPage() {
+    const [showAlert,setShowAlert ] = useState(false)
+
+    console.log(showAlert)
     return (
         <>
             <Stack>
-                {/*<Box>*/}
-                {/*    <CustomAlert>*/}
-                {/*        <div>yes, I am from parent</div>*/}
-                {/*    </CustomAlert>*/}
-                {/*</Box>*/}
+                <Box>
+                    <CustomAlert show={showAlert}>
+                        <div>yes, I am from parent</div>
+                    </CustomAlert>
+
+                    <Button variant="contained" onClick={() => {
+                        setShowAlert(!showAlert);
+                    }}> click </Button>
+                </Box>
                 {/*<Box sx={{p: 2, border: '1px dashed grey'}}>*/}
                 {/*    <Typography variant='body2'>123</Typography>*/}
                 {/*    <Typography>789</Typography>*/}
@@ -68,17 +76,17 @@ function IndexPage() {
                 {/*</Box>*/}
             </Stack>
 
-            <Grid container spacing={gridSpacing} alignItems="center">
-                <Grid item xs={12} md={6} lg={6}>
-                    <ConversionsChartCard chartData={chartData.ConversionsChartCardData}/>
-                </Grid>
-                <Grid item xs={12} md={6} lg={6}>
-                    <SatisfactionChartCard chartData={chartData.SatisfactionChartCardData}/>
-                </Grid>
-            </Grid>
+            {/*<Grid container spacing={gridSpacing} alignItems="center">*/}
+            {/*    <Grid item xs={12} md={6} lg={6}>*/}
+            {/*        <ConversionsChartCard chartData={chartData.ConversionsChartCardData}/>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={12} md={6} lg={6}>*/}
+            {/*        <SatisfactionChartCard chartData={chartData.SatisfactionChartCardData}/>*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
 
         </>
     )
 }
 
-export default IndexPage;
+export default TestPage;
