@@ -1,8 +1,12 @@
-import React, {useEffect, useState} from 'react'
-import {Alert, AlertTitle, Collapse} from "@mui/material";
+import React, {useContext} from 'react'
+import {Alert, AlertTitle} from "@mui/material";
+import {AlertStatusContext} from "../TestPage";
 
 function CustomAlert(props) {
-    let {onClose} = props
+    const {setShowAlert} = useContext(AlertStatusContext)
+    const onClose = () => {
+        setShowAlert(false)
+    }
 
     return (
         <Alert severity='info' onClose={onClose}>

@@ -1,4 +1,4 @@
-import {Box, Button, Grid, Stack, Typography} from "@mui/material";
+import {Box, Button, Collapse, Grid, Paper, Stack, Typography} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import TableCustomFilter from "./component/TableCustomFilter";
 import TableServerSide from "./component/TableServerSide";
@@ -7,7 +7,8 @@ import CustomAlert from "./component/CustomAlert";
 import SatisfactionChartCard from "./component/chart/SatisfactionChartCard";
 import chartData from "./component/chart/chartData";
 import ConversionsChartCard from "./component/chart/ConversionsChartCard";
-import {useState} from "react";
+import {createContext, useContext, useState} from "react";
+import {Pages} from "@mui/icons-material";
 
 
 const APP_HEADER_HEIGHT = 80;
@@ -42,39 +43,45 @@ const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(({th
 }))
 
 
-function TestPage() {
-    const [showAlert,setShowAlert ] = useState(false)
+export const AlertStatusContext = createContext(false);
 
-    console.log(showAlert)
+function TestPage() {
+    const [showAlert, setShowAlert] = useState(false)
+
+
+    const openAlert = () => {
+        setShowAlert(true)
+    };
+
     return (
         <>
-            <Stack>
-                <Box>
-                    <CustomAlert show={showAlert}>
-                        <div>yes, I am from parent</div>
-                    </CustomAlert>
-
-                    <Button variant="contained" onClick={() => {
-                        setShowAlert(!showAlert);
-                    }}> click </Button>
-                </Box>
-                {/*<Box sx={{p: 2, border: '1px dashed grey'}}>*/}
-                {/*    <Typography variant='body2'>123</Typography>*/}
-                {/*    <Typography>789</Typography>*/}
-                {/*</Box>*/}
-                {/*<Box sx={{p: 2, border: '1px dashed grey'}}>*/}
-                {/*   <TableCustomFilter />*/}
-                {/*</Box>*/}
-                {/*<Box>*/}
-                {/*    <TableServerSide></TableServerSide>*/}
-                {/*</Box>*/}
-                {/*<Box>*/}
-                {/*    <Count></Count>*/}
-                {/*</Box>*/}
-                {/*<Box>*/}
-                {/*     <SatisfactionChartCard chartData.js={ chartData.js}></SatisfactionChartCard>*/}
-                {/*</Box>*/}
-            </Stack>
+            {/*<Stack>*/}
+            <Box>
+                <AlertStatusContext.Provider value={{setShowAlert}}>
+                    {showAlert ?
+                        <CustomAlert>
+                            <div>yes, I am from parent</div>
+                        </CustomAlert> : null}
+                </AlertStatusContext.Provider>
+                <Button variant="contained" onClick={openAlert}> click </Button>
+            </Box>
+            {/*<Box sx={{p: 2, border: '1px dashed grey'}}>*/}
+            {/*    <Typography variant='body2'>123</Typography>*/}
+            {/*    <Typography>789</Typography>*/}
+            {/*</Box>*/}
+            {/*<Box sx={{p: 2, border: '1px dashed grey'}}>*/}
+            {/*   <TableCustomFilter />*/}
+            {/*</Box>*/}
+            {/*<Box>*/}
+            {/*    <TableServerSide></TableServerSide>*/}
+            {/*</Box>*/}
+            {/*<Box>*/}
+            {/*    <Count></Count>*/}
+            {/*</Box>*/}
+            {/*<Box>*/}
+            {/*     <SatisfactionChartCard chartData.js={ chartData.js}></SatisfactionChartCard>*/}
+            {/*</Box>*/}
+            {/*</Stack>*/}
 
             {/*<Grid container spacing={gridSpacing} alignItems="center">*/}
             {/*    <Grid item xs={12} md={6} lg={6}>*/}
