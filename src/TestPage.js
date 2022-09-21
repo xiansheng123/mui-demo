@@ -53,15 +53,20 @@ function TestPage() {
         setShowAlert(true)
     };
 
+    function GetAlert() {
+        if (showAlert) {
+            return <CustomAlert>
+                <div>yes, I am from parent</div>
+            </CustomAlert>
+        } else return null
+    }
+
     return (
         <>
             {/*<Stack>*/}
             <Box>
                 <AlertStatusContext.Provider value={{setShowAlert}}>
-                    {showAlert ?
-                        <CustomAlert>
-                            <div>yes, I am from parent</div>
-                        </CustomAlert> : null}
+                    <GetAlert/>
                 </AlertStatusContext.Provider>
                 <Button variant="contained" onClick={openAlert}> click </Button>
             </Box>
